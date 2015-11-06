@@ -1,3 +1,4 @@
+
 package Stage2;
 
 import java.awt.Color;
@@ -28,1568 +29,2182 @@ import javax.swing.SwingUtilities;
 
 
 public class Board {
-	private JFrame _jf;
-	private JFrame _jf2;
-	private JPanel _jp;
-	private JPanel _jp2;
-	private JPanel _jp3;
-	private int[] _buttons;
-	private static String _p;
-	static int counter=-1;
-	public String _ImageAddress;
-	public int blk = 0;
-	private static final int _jp3_w = 230;
-	private static final int _jp3_h = 390;
-	protected static final Graphics2D Graphics2D = null;
-	ArrayList<JButton> jb = new ArrayList();
-	public static ArrayList<Integer> FillCheck = new ArrayList();
-	// randomly drawn tiles
-	static JButton _jb2 = new JButton("Draw Tile");
-	JButton exit_bt = new JButton(); // add tile button to window 2
-	public boolean marker = false;
+    private JFrame _jf; //main jFrame
+    private JFrame _jf2;
+    private JPanel _jp;
+    private JPanel _jp2;
+    private JPanel _jp3;
+    private int[] _buttons;
+    private static String _p;
+    static int counter=-1;
+    public String _ImageAddress;
+    public int blk = 0;
+    private static final int _jp3_w = 230;
+    private static final int _jp3_h = 390;
+    protected static final Graphics2D Graphics2D = null;
+    ArrayList<JButton> jb = new ArrayList();
+    public static ArrayList<Integer> FillCheck = new ArrayList();
+    // randomly drawn tiles
+    static JButton _jb2 = new JButton("Draw Tile");
+    JButton exit_bt = new JButton(); // add tile button to window 2
+    public boolean marker = false;
 
-	public static void main(String[] args) {
-	    Board Board;
-		Board = new Board();
-		Board.drawTile(Board.callBlockCoordinate(3, 3), 1);
-		FillCheck.add(Board.callBlockCoordinate(3, 3));
-		Board.callDrawAction();
-		Board.callSelectBlockIndex();
-		_jb2.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-			if(counter>args.length-2){
-				counter = -1;
-			}
-			counter++;
-				_p =args[counter];
-				_jb2.setText(_p);
-			}});
-	}
-	// draw button
-	public void clickrotate(){
-		for (int i =0; i<=73;i++){
-			jb.get(i).addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					AffineTransform identity = new AffineTransform();
-					java.awt.Graphics2D g = null;
-					Graphics2D g2d = (Graphics2D)g;
-					AffineTransform trans = new AffineTransform();
-					trans.setTransform(identity);
-					trans.rotate( Math.toRadians(90) );
-				}
-		});
-		}		
-	}
-	public void callDrawAction() // change tile to the drawn tile
-	{
-		// _jb2 is the "Draw Tile" button
-		_jb2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				_ImageAddress = ""; // reset _ImageAddress variable
-				exit_bt.setIcon(new ImageIcon(""));
-				// random draw index generator
-				Random generator = new Random();
-				// int j = generator.nextInt(45); //randomly pick any of 45
-				// Blocks
-				int j2 = generator.nextInt((24 - 1) + 1) + 1; // randomly pick
-																// any of 24
-																// Tiles0
-				// System.out.println("Block Number: " + j);
-				System.out.println("Tile Number: " + j2);
-				_ImageAddress = getTile(j2); // obtains the root of Tile index
-												// j2
-				if (true) // check if something present in _ImageAddress
-				{
-					try
-					{
-						// randomly select tile
-						Image img_of_drawn_tile = ImageIO.read(getClass()
-								.getResource(_ImageAddress)); // _ImageAddress
-																// stores the
-																// root of
-																// current
-																// random image
-						exit_bt.setIcon(new ImageIcon(img_of_drawn_tile));
-					}
-					catch (IOException ex) {
-					}
-				}
-			}
-		});
-	}
-	protected int nextInt(int i) {
-		return 0;
-	}
+    public static void main(final String[] args) {
+        Board Board;
+        Board = new Board();
+        Board.drawTile(Board.callBlockCoordinate(3, 3), 1);
+        FillCheck.add(Board.callBlockCoordinate(3, 3));
+        Board.callDrawAction();
+        Board.callSelectBlockIndex();
+        _jb2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+            if(counter>args.length-2){
+                counter = -1;
+            }
+            counter++;
+                _p =args[counter];
+                _jb2.setText(_p);
+            }});
+    }
+    // draw button
+    public void clickrotate(){
+        for (int i =0; i<=73;i++){
+            jb.get(i).addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    AffineTransform identity = new AffineTransform();
+                    java.awt.Graphics2D g = null;
+                    Graphics2D g2d = (Graphics2D)g;
+                    AffineTransform trans = new AffineTransform();
+                    trans.setTransform(identity);
+                    trans.rotate( Math.toRadians(90) );
+                }
+        });
+        }        
+    }
+    public void callDrawAction() // change tile to the drawn tile
+    {
+        // _jb2 is the "Draw Tile" button
+        _jb2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                _ImageAddress = ""; // reset _ImageAddress variable
+                exit_bt.setIcon(new ImageIcon(""));
+                // random draw index generator
+                Random generator = new Random();
+                // int j = generator.nextInt(45); //randomly pick any of 45
+                // Blocks
+                int j2 = generator.nextInt((24 - 1) + 1) + 1; // randomly pick
+                                                                // any of 24
+                                                                // Tiles0
+                // System.out.println("Block Number: " + j);
+                System.out.println("Tile Number: " + j2);
+                _ImageAddress = getTile(j2); // obtains the root of Tile index
+                                                // j2
+                if (true) // check if something present in _ImageAddress
+                {
+                    try
+                    {
+                        // randomly select tile
+                        Image img_of_drawn_tile = ImageIO.read(getClass()
+                                .getResource(_ImageAddress)); // _ImageAddress
+                                                                // stores the
+                                                                // root of
+                                                                // current
+                                                                // random image
+                        exit_bt.setIcon(new ImageIcon(img_of_drawn_tile));
+                    }
+                    catch (IOException ex) {
+                    }
+                }
+            }
+        });
+    }
+    protected int nextInt(int i) {
+        return 0;
+    }
 // end of draw button action
-	public void callSelectBlock(int block_no)
-	{
-		final int blk = block_no;
-		try
-		{
-			// randomly select tile
-			Image img_last = ImageIO
-					.read(getClass().getResource(_ImageAddress));
-			System.out.println(">>In action method");
-			jb.get(blk).setIcon(new ImageIcon(img_last));
-			// callSelectBlockIndex();
-			System.out.println(blk);
-			FillCheck.add(blk);
-		}
-		catch (IOException ex) {
-		}
-	}// end of callSelectBlock(int block_no)
-	// returns if placing tile in a particular block is allowed
-	public boolean callAllowPlaceBlock(int xp, int yp)
-	{
-		boolean allow = false;
-		int x1, x2, x3, x4, x5, x6, x7, x8;
-		int y1, y2, y3, y4, y5, y6, y7, y8;
-		if (xp == 0 && yp == 0) // check for top left corner
-		{
-			x1 = xp + 1; // right
-			y1 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
-				return true;
-			x2 = xp; // bottom
-			y2 = yp + 1;
-			if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
-				return true;
-		}
-		else if (xp == 7 && yp == 0) // check for top right corner
-		{
-			x1 = xp - 1; // left
-			y1 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
-				return true;
-			x2 = xp; // bottom
-			y2 = yp + 1;
-			if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
-				return true;
-		}
-		else if (xp == 0 && yp == 8) // check for bottom left corner
-		{
-			x1 = xp + 1; // right
-			y1 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
-				return true;
-			x2 = xp; // top
-			y2 = yp - 1;
-			if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
-				return true;
-		}
-		else if (xp == 7 && yp == 8) // check for bottom right corner
-		{
-			x1 = xp - 1; // left
-			y1 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
-				return true;
-			x2 = xp; // top
-			y2 = yp - 1;
-			if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
-				return true;
-		}
-		else if (xp == 0 && yp > 0 && yp < 9) // left column
-		{
-			x1 = xp + 1; // right
-			y1 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
-				return true;
-			x2 = xp; // top 
-			y2 = yp - 1;
-			if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
-				return true;
-			x4 = xp;
-		y4 = yp + 1; // bottom
-		if (FillCheck.contains(callBlockCoordinate(x4, y4)) == true)
-			return true;
-		}
-		else if (xp == 7 && yp > 0 && yp < 9) // right column
-		{
-			x1 = xp - 1; // left
-			y1 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
-				return true;
-			x2 = xp; // bottom
-			y2 = yp + 1;
-			if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
-				return true;
-			x3 = xp; // top
-			y3 = yp - 1;
-			if (FillCheck.contains(callBlockCoordinate(x3, y3)) == true)
-				return true;
-			}
-		// possible error
-		else if (xp > 0 && xp < 8 && yp == 0) // top row
-		{
-			x1 = xp + 1; // right
-			y1 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
-				return true;
-			x2 = xp - 1; // left
-			y2 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
-				return true;
-			x3 = xp; // bottom
-			y3 = yp + 1;
-			if (FillCheck.contains(callBlockCoordinate(x3, y3)) == true)
-				return true;
-			}
-		else if (xp > 0 && xp < 8 && yp == 8) // bottom row
-		{
-			x1 = xp + 1; // right
-			y1 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
-				return true;
-			x2 = xp - 1; // left
-			y2 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
-				return true;
-			x3 = xp; // top
-			y3 = yp - 1;
-			if (FillCheck.contains(callBlockCoordinate(x3, y3)) == true)
-				return true;
-		}
-		else if (xp > 0 && yp > 0)
-		{
-			x1 = xp + 1; // right
-			y1 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
-				return true;
-			x2 = xp - 1; // left
-			y2 = yp;
-			if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
-				return true;
-			x3 = xp;
-			y3 = yp - 1; // top
-			if (FillCheck.contains(callBlockCoordinate(x3, y3)) == true)
-				return true;
-			x4 = xp;
-			y4 = yp + 1; // bottom
-			if (FillCheck.contains(callBlockCoordinate(x4, y4)) == true)
-				return true;
-			}
-		return allow;
-	}// end of callAllowPlaceBlock
-	public void callSelectBlockIndex()
-	{
-		int block_index = 0;
-		int x = 0;
-		int y = 0;
-		// block1
-		jb.get(0).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 0;
-				System.out.println("Block 1 pressed");
-				if (FillCheck.contains(blk) == false)
-				{
-					if (callAllowPlaceBlock(0, 0) == true)
-						callSelectBlock(blk);
-				}
-				else
-				{
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block2
-		jb.get(1).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 1;
-				System.out.println("Block 2 pressed");
-				if (FillCheck.contains(blk) == false)
-				{
-					if (callAllowPlaceBlock(1, 0) == true)
-						callSelectBlock(blk);
-				}
-				else
-				{
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block3
-		jb.get(2).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 2;
-				System.out.println("Block 3 pressed");
-				if (FillCheck.contains(blk) == false)
-				{
-					if (callAllowPlaceBlock(2, 0) == true)
-						callSelectBlock(blk);
-				}
-				else
-				{
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block4
-		jb.get(3).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 3;
-				System.out.println("Block 4 pressed");
-				if (FillCheck.contains(blk) == false)
-				{
-					if (callAllowPlaceBlock(3, 0) == true)
-						callSelectBlock(blk);
-				}
-				else
-				{
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block5
-		jb.get(4).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 4;
-				System.out.println("Block 5 pressed");
-				if (FillCheck.contains(blk) == false)
-				{
-					if (callAllowPlaceBlock(4, 0) == true)
-						callSelectBlock(blk);
-				}
-				else
-				{
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block6
-		jb.get(5).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 5;
-				System.out.println("Block 6 pressed");
-				if (FillCheck.contains(blk) == false)
-				{
-					if (callAllowPlaceBlock(5, 0) == true)
-						callSelectBlock(blk);
-				}
-				else
-				{
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block7
-		jb.get(6).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 6;
-				System.out.println("Block 7 pressed");
-				if (FillCheck.contains(blk) == false)
-				{
-					if (callAllowPlaceBlock(6, 0) == true)
-						callSelectBlock(blk);
-				}
-				else
-				{
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block8
-		jb.get(7).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 7;
-				System.out.println("Block 8 pressed");
-				if (FillCheck.contains(blk) == false)
-				{
-					if (callAllowPlaceBlock(7, 0) == true)
-						callSelectBlock(blk);
-				}
-				else
-				{
-					System.out.println("Tile already exists!");
-				}
-			}
+    
 
-		});
+    
+    
+    
+    public void callSelectBlock(int block_no)
+    {
+        final int blk = block_no;
+        try
+        {
+            // randomly select tile
+            /*
+            Image img_last = ImageIO
+                    .read(getClass().getResource(_ImageAddress));*/
+            
+            BufferedImage img_last = ImageIO.read(getClass().getResource(_ImageAddress));
+            //img_last = rotate90ToRight(img_last);
+            
+            //return rotated image
+            //Image new_rotated_image = ;
+            
+            //BufferedImage img_to_rotate; //= img_last;
+            //img_to_rotate.
+            
+            System.out.println(">>In action method");
+            jb.get(blk).setIcon(new ImageIcon(img_last));
+            // callSelectBlockIndex();
+            System.out.println(blk);
+            FillCheck.add(blk);
+        }
+        catch (IOException ex) {
+        }
+    }// end of callSelectBlock(int block_no)
+    
+    //return rotated tile
+    public void callSelectBlockRotate(int block_no, int rotate_times)
+    {
+        final int blk = block_no;
+        try
+        {
+            // selected tile
+            BufferedImage img_last = ImageIO.read(getClass().getResource(_ImageAddress));
+            
+            //img_last = scale(img_last, 1, img_last.getWidth()/2, img_last.getHeight()/2, 0.5, 0.5);
+            
+            //img_last.
+            
+            for(int i = 0; i<rotate_times; i++)
+            {
+                img_last = rotate90ToRight(img_last);
+            }
+            
+            System.out.println(">>In action method");
+            Color[] colors = {Color.black, Color.blue, Color.green, Color.red, Color.yellow};
+            for (int i = 0; i < colors.length; i++) {
+               Color c = colors[i];
+            jb.get(blk).setBackground(c); //set background of jbutton
+            jb.get(blk).setIcon(new ImageIcon(img_last));
+            // callSelectBlockIndex();
+            System.out.println(blk);
+            //FillCheck.add(blk);
+        }
+        }
+        catch (IOException ex) {
+        }
+    }// end of callSelectBlockRotate(int block_no)
+    
+    
+    
+    //return scaled image
+    //dWidth -> destination image width
+    //dHeight -> destination image height
+    //fWidth -> scale factor
+    //fHeight -> scale factor
+    public static BufferedImage scale(BufferedImage sbi, int imageType, int dWidth, int dHeight, double fWidth, double fHeight) {
+        BufferedImage dbi = null;
+        if(sbi != null) {
+            dbi = new BufferedImage(dWidth, dHeight, imageType);
+            Graphics2D g = dbi.createGraphics();
+            AffineTransform at = AffineTransform.getScaleInstance(fWidth, fHeight);
+            g.drawRenderedImage(sbi, at);
+        }
+        return dbi;
+    }//end of scaled image
+    
+    
+    
+    
+    // returns if placing tile in a particular block is allowed
+    public boolean callAllowPlaceBlock(int xp, int yp)
+    {
+        boolean allow = false;
+        int x1, x2, x3, x4, x5, x6, x7, x8;
+        int y1, y2, y3, y4, y5, y6, y7, y8;
+        if (xp == 0 && yp == 0) // check for top left corner
+        {
+            x1 = xp + 1; // right
+            y1 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
+                return true;
+            x2 = xp; // bottom
+            y2 = yp + 1;
+            if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
+                return true;
+        }
+        else if (xp == 7 && yp == 0) // check for top right corner
+        {
+            x1 = xp - 1; // left
+            y1 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
+                return true;
+            x2 = xp; // bottom
+            y2 = yp + 1;
+            if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
+                return true;
+        }
+        else if (xp == 0 && yp == 8) // check for bottom left corner
+        {
+            x1 = xp + 1; // right
+            y1 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
+                return true;
+            x2 = xp; // top
+            y2 = yp - 1;
+            if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
+                return true;
+        }
+        else if (xp == 7 && yp == 8) // check for bottom right corner
+        {
+            x1 = xp - 1; // left
+            y1 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
+                return true;
+            x2 = xp; // top
+            y2 = yp - 1;
+            if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
+                return true;
+        }
+        else if (xp == 0 && yp > 0 && yp < 9) // left column
+        {
+            x1 = xp + 1; // right
+            y1 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
+                return true;
+            x2 = xp; // top 
+            y2 = yp - 1;
+            if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
+                return true;
+            x4 = xp;
+        y4 = yp + 1; // bottom
+        if (FillCheck.contains(callBlockCoordinate(x4, y4)) == true)
+            return true;
+        }
+        else if (xp == 7 && yp > 0 && yp < 9) // right column
+        {
+            x1 = xp - 1; // left
+            y1 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
+                return true;
+            x2 = xp; // bottom
+            y2 = yp + 1;
+            if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
+                return true;
+            x3 = xp; // top
+            y3 = yp - 1;
+            if (FillCheck.contains(callBlockCoordinate(x3, y3)) == true)
+                return true;
+            }
+        // possible error
+        else if (xp > 0 && xp < 8 && yp == 0) // top row
+        {
+            x1 = xp + 1; // right
+            y1 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
+                return true;
+            x2 = xp - 1; // left
+            y2 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
+                return true;
+            x3 = xp; // bottom
+            y3 = yp + 1;
+            if (FillCheck.contains(callBlockCoordinate(x3, y3)) == true)
+                return true;
+            }
+        else if (xp > 0 && xp < 8 && yp == 8) // bottom row
+        {
+            x1 = xp + 1; // right
+            y1 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
+                return true;
+            x2 = xp - 1; // left
+            y2 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
+                return true;
+            x3 = xp; // top
+            y3 = yp - 1;
+            if (FillCheck.contains(callBlockCoordinate(x3, y3)) == true)
+                return true;
+        }
+        else if (xp > 0 && yp > 0)
+        {
+            x1 = xp + 1; // right
+            y1 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x1, y1)) == true)
+                return true;
+            x2 = xp - 1; // left
+            y2 = yp;
+            if (FillCheck.contains(callBlockCoordinate(x2, y2)) == true)
+                return true;
+            x3 = xp;
+            y3 = yp - 1; // top
+            if (FillCheck.contains(callBlockCoordinate(x3, y3)) == true)
+                return true;
+            x4 = xp;
+            y4 = yp + 1; // bottom
+            if (FillCheck.contains(callBlockCoordinate(x4, y4)) == true)
+                return true;
+            }
+        return allow;
+    }// end of callAllowPlaceBlock
+    public void callSelectBlockIndex()
+    {
+        int block_index = 0;
+        int x = 0;
+        int y = 0;
+        // block1
+        jb.get(0).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 0;
+                System.out.println("Block 1 pressed");
+                if (FillCheck.contains(blk) == false)
+                {
+                    if (callAllowPlaceBlock(0, 0) == true)
+                        callSelectBlock(blk);
+                }
+                else
+                {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block2
+        jb.get(1).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 1;
+                System.out.println("Block 2 pressed");
+                if (FillCheck.contains(blk) == false)
+                {
+                    if (callAllowPlaceBlock(1, 0) == true)
+                        callSelectBlock(blk);
+                }
+                else
+                {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block3
+        jb.get(2).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 2;
+                System.out.println("Block 3 pressed");
+                if (FillCheck.contains(blk) == false)
+                {
+                    if (callAllowPlaceBlock(2, 0) == true)
+                        callSelectBlock(blk);
+                }
+                else
+                {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block4
+        jb.get(3).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 3;
+                System.out.println("Block 4 pressed");
+                if (FillCheck.contains(blk) == false)
+                {
+                    if (callAllowPlaceBlock(3, 0) == true)
+                        callSelectBlock(blk);
+                }
+                else
+                {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block5
+        jb.get(4).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 4;
+                System.out.println("Block 5 pressed");
+                if (FillCheck.contains(blk) == false)
+                {
+                    if (callAllowPlaceBlock(4, 0) == true)
+                        callSelectBlock(blk);
+                }
+                else
+                {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block6
+        jb.get(5).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 5;
+                System.out.println("Block 6 pressed");
+                if (FillCheck.contains(blk) == false)
+                {
+                    if (callAllowPlaceBlock(5, 0) == true)
+                        callSelectBlock(blk);
+                }
+                else
+                {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block7
+        jb.get(6).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 6;
+                System.out.println("Block 7 pressed");
+                if (FillCheck.contains(blk) == false)
+                {
+                    if (callAllowPlaceBlock(6, 0) == true)
+                        callSelectBlock(blk);
+                }
+                else
+                {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block8
+        jb.get(7).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 7;
+                System.out.println("Block 8 pressed");
+                if (FillCheck.contains(blk) == false)
+                {
+                    if (callAllowPlaceBlock(7, 0) == true)
+                        callSelectBlock(blk);
+                }
+                else
+                {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
 
-		// block9
+        });
 
-		jb.get(8).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 8;
-				System.out.println("Block 9 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(0, 1) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block10
-		jb.get(9).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 9;
-				System.out.println("Block 10 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(1, 1) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block11
-		jb.get(10).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 10;
-				System.out.println("Block 11 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(2, 1) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block12
-		jb.get(11).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 11;
-				System.out.println("Block 12 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(3, 1) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block13
-		jb.get(12).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 12;
-				System.out.println("Block 13 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(4, 1) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block14
-		jb.get(13).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 13;
-				System.out.println("Block 14 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(5, 1) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block15
-		jb.get(14).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 14;
-				System.out.println("Block 15 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(6, 1) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block16
-		jb.get(15).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 15;
-				System.out.println("Block 16 pressed");
+        // block9
 
-				if (FillCheck.contains(blk) == false) {
+        jb.get(8).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 8;
+                System.out.println("Block 9 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(0, 1) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block10
+        jb.get(9).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 9;
+                System.out.println("Block 10 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(1, 1) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block11
+        jb.get(10).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 10;
+                System.out.println("Block 11 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(2, 1) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block12
+        jb.get(11).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 11;
+                System.out.println("Block 12 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(3, 1) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block13
+        jb.get(12).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 12;
+                System.out.println("Block 13 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(4, 1) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block14
+        jb.get(13).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 13;
+                System.out.println("Block 14 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(5, 1) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block15
+        jb.get(14).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 14;
+                System.out.println("Block 15 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(6, 1) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block16
+        jb.get(15).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 15;
+                System.out.println("Block 16 pressed");
 
-					if (callAllowPlaceBlock(7, 1) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block17
-		jb.get(16).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 16;
-				System.out.println("Block 17 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(0, 2) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block18
-		jb.get(17).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 17;
-				System.out.println("Block 18 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(1, 2) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block19
-		jb.get(18).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 18;
-				System.out.println("Block 19 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(2, 2) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block20
-		jb.get(19).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 19;
-				System.out.println("Block 20 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(3, 2) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block21
-		jb.get(20).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 20;
-				System.out.println("Block 21 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(4, 2) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block22
-		jb.get(21).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 21;
-				System.out.println("Block 22 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(5, 2) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block23
-		jb.get(22).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 22;
-				System.out.println("Block 23 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(6, 2) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block24
-		jb.get(23).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 23;
-				System.out.println("Block 24 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(7, 2) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block25
-		jb.get(24).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 24;
-				System.out.println("Block 24 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(0, 3) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block26
-		jb.get(25).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 25;
-				System.out.println("Block 26 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(1, 3) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block27
-		jb.get(26).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 26;
-				System.out.println("Block 27 pressed");
-				System.out.println(callAllowPlaceBlock(4, 3));
-				System.out.println(callBlockCoordinate(4, 3));
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(2, 3) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-					}
-			}
-		});
-		// block28
-		jb.get(27).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 27;
-				System.out.println("Block 28 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(3, 3) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block29
-		jb.get(28).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 28;
-				System.out.println("Block 29 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(4, 3) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block30
-		jb.get(29).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 29;
-				System.out.println("Block 30 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(5, 3) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block31
-		jb.get(30).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 30;
-				System.out.println("Block 31 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(6, 3) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block32
-		jb.get(31).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 31;
-				System.out.println("Block 32 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(7, 3) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block33
-		jb.get(32).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 32;
-				System.out.println("Block 33 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(0, 4) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block34
-		jb.get(33).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 33;
-				System.out.println("Block 34 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(1, 4) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block35
-		jb.get(34).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 34;
-				System.out.println("Block 35 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(2, 4) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block36
-		jb.get(35).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 35;
-				System.out.println("Block 36 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(3, 4) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block37
-		jb.get(36).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 36;
-				System.out.println("Block 37 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(4, 4) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block38
-		jb.get(37).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 37;
-				System.out.println("Block 38 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(5, 4) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block39
-		jb.get(38).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 38;
-				System.out.println("Block 39 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(6, 4) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block40
-		jb.get(39).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 39;
-				System.out.println("Block 40 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(7, 4) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block41
-		jb.get(40).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 40;
-				System.out.println("Block 41 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(0, 5) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block42
-		jb.get(41).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 41;
-				System.out.println("Block 42 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(1, 5) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block43
-		jb.get(42).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 42;
-				System.out.println("Block 43 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(2, 5) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block44
-		jb.get(43).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 43;
-				System.out.println("Block 44 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(3, 5) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block45
-		jb.get(44).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 44;
-				System.out.println("Block 45 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(4, 5) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block46
-		jb.get(45).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 45;
-				System.out.println("Block 46 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(5, 5) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block47
-		jb.get(46).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 46;
-				System.out.println("Block 47 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(6, 5) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block48
-		jb.get(47).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 47;
-				System.out.println("Block 48 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(7, 5) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block49
-		jb.get(48).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 48;
-				System.out.println("Block 49 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(0, 6) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block50
-		jb.get(49).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 49;
-				System.out.println("Block 50 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(1, 6) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block51
-		jb.get(50).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 50;
-				System.out.println("Block 51 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(2, 6) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block52
-		jb.get(51).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 51;
-				System.out.println("Block 52 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(3, 6) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block53
-		jb.get(52).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 52;
-				System.out.println("Block 53 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(4, 6) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block54
-		jb.get(53).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 53;
-				System.out.println("Block 54 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(5, 6) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block55
-		jb.get(54).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 54;
-				System.out.println("Block 55 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(6, 6) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block56
-		jb.get(55).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 55;
-				System.out.println("Block 56 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(7, 6) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block57
-		jb.get(56).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 56;
-				System.out.println("Block 57 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(0, 7) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block58
-		jb.get(57).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 57;
-				System.out.println("Block 58 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(1, 7) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block59
-		jb.get(58).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 58;
-				System.out.println("Block 59 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(2, 7) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block60
-		jb.get(59).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 59;
-				System.out.println("Block 60 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(3, 7) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block61
-		jb.get(60).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 60;
-				System.out.println("Block 61 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(4, 7) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block62
-		jb.get(61).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 61;
-				System.out.println("Block 62 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(5, 7) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block63
-		jb.get(62).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 62;
-				System.out.println("Block 63 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(6, 7) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block64
-		jb.get(63).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 63;
-				System.out.println("Block 64 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(7, 7) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block65
-		jb.get(64).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 64;
-				System.out.println("Block 65 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(0, 8) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block66
-		jb.get(65).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 65;
-				System.out.println("Block 66 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(1, 8) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block67
-		jb.get(66).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 66;
-				System.out.println("Block 67 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(2, 8) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block68
-		jb.get(67).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 67;
-				System.out.println("Block 68 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(3, 8) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block69
-		jb.get(68).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 68;
-				System.out.println("Block 69 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(4, 8) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block70
-		jb.get(69).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 69;
-				System.out.println("Block 70 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(5, 8) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block71
-		jb.get(70).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 70;
-				System.out.println("Block 71 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(6, 8) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-		// block72
-		jb.get(71).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				blk = 71;
-				System.out.println("Block 72 pressed");
-				if (FillCheck.contains(blk) == false) {
-					if (callAllowPlaceBlock(7, 8) == true)
-						callSelectBlock(blk);
-				} else {
-					System.out.println("Tile already exists!");
-				}
-			}
-		});
-	}// end of callSelectBlockIndex()
-	public BufferedImage rotate90ToRight( BufferedImage img_last ){
-		int width = img_last.getWidth();
-		int height = img_last.getHeight();
-		BufferedImage returnImage = new BufferedImage( height, width , img_last.getType());
+                if (FillCheck.contains(blk) == false) {
 
-		for( int x = 0; x < width; x++ ) {
-			for( int y = 0; y < height; y++ ) {
-				returnImage.setRGB( height - y -1, x, img_last.getRGB( x, y  )  );
-			}
-		}
-		return returnImage;
-	}
-	public String getTile(int index) // return address of given tile index
-	{
-		String ret = "";
-		switch (index)
+                    if (callAllowPlaceBlock(7, 1) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                
+                }
+            }
+        });
+        // block17
+        jb.get(16).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 16;
+                System.out.println("Block 17 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(0, 2) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block18
+        jb.get(17).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 17;
+                System.out.println("Block 18 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(1, 2) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block19
+        jb.get(18).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 18;
+                System.out.println("Block 19 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(2, 2) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block20
+        jb.get(19).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 19;
+                System.out.println("Block 20 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(3, 2) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block21
+        jb.get(20).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 20;
+                System.out.println("Block 21 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(4, 2) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block22
+        jb.get(21).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 21;
+                System.out.println("Block 22 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(5, 2) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block23
+        jb.get(22).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 22;
+                System.out.println("Block 23 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(6, 2) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block24
+        jb.get(23).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 23;
+                System.out.println("Block 24 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(7, 2) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block25
+        jb.get(24).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 24;
+                System.out.println("Block 24 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(0, 3) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block26
+        jb.get(25).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 25;
+                System.out.println("Block 26 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(1, 3) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block27
+        jb.get(26).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 26;
+                
+                System.out.println("Block 27 pressed");
+                System.out.println(callAllowPlaceBlock(4, 3));
+                System.out.println(callBlockCoordinate(4, 3));
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(2, 3) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+                
+            }
+        });
+        // block28
+        jb.get(27).addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                blk = 27;
+                System.out.println("Block 28 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(3, 3) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                }
+            }
+        });
+        // block29
+        jb.get(28).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 28;
+                System.out.println("Block 29 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(4, 3) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block30
+        jb.get(29).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 29;
+                System.out.println("Block 30 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(5, 3) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block31
+        jb.get(30).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 30;
+                System.out.println("Block 31 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(6, 3) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block32
+        jb.get(31).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 31;
+                System.out.println("Block 32 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(7, 3) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block33
+        jb.get(32).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 32;
+                System.out.println("Block 33 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(0, 4) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block34
+        jb.get(33).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 33;
+                System.out.println("Block 34 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(1, 4) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block35
+        jb.get(34).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 34;
+                System.out.println("Block 35 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(2, 4) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block36
+        jb.get(35).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 35;
+                System.out.println("Block 36 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(3, 4) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block37
+        jb.get(36).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 36;
+                System.out.println("Block 37 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(4, 4) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block38
+        jb.get(37).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 37;
+                System.out.println("Block 38 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(5, 4) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block39
+        jb.get(38).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 38;
+                System.out.println("Block 39 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(6, 4) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block40
+        jb.get(39).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 39;
+                System.out.println("Block 40 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(7, 4) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block41
+        jb.get(40).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 40;
+                System.out.println("Block 41 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(0, 5) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block42
+        jb.get(41).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 41;
+                System.out.println("Block 42 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(1, 5) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block43
+        jb.get(42).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 42;
+                System.out.println("Block 43 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(2, 5) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block44
+        jb.get(43).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 43;
+                System.out.println("Block 44 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(3, 5) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block45
+        jb.get(44).addActionListener(new ActionListener() {
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 44;
+                System.out.println("Block 45 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(4, 5) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block46
+        jb.get(45).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 45;
+                System.out.println("Block 46 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(5, 5) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block47
+        jb.get(46).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 46;
+                System.out.println("Block 47 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(6, 5) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block48
+        jb.get(47).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 47;
+                System.out.println("Block 48 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(7, 5) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block49
+        jb.get(48).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 48;
+                System.out.println("Block 49 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(0, 6) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block50
+        jb.get(49).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 49;
+                System.out.println("Block 50 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(1, 6) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block51
+        jb.get(50).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 50;
+                System.out.println("Block 51 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(2, 6) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block52
+        jb.get(51).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 51;
+                System.out.println("Block 52 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(3, 6) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block53
+        jb.get(52).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 52;
+                System.out.println("Block 53 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(4, 6) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block54
+        jb.get(53).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 53;
+                System.out.println("Block 54 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(5, 6) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block55
+        jb.get(54).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 54;
+                System.out.println("Block 55 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(6, 6) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block56
+        jb.get(55).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 55;
+                System.out.println("Block 56 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(7, 6) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block57
+        jb.get(56).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 56;
+                System.out.println("Block 57 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(0, 7) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block58
+        jb.get(57).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 57;
+                System.out.println("Block 58 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(1, 7) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block59
+        jb.get(58).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 58;
+                System.out.println("Block 59 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(2, 7) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block60
+        jb.get(59).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 59;
+                System.out.println("Block 60 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(3, 7) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block61
+        jb.get(60).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 60;
+                System.out.println("Block 61 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(4, 7) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block62
+        jb.get(61).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 61;
+                System.out.println("Block 62 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(5, 7) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block63
+        jb.get(62).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 62;
+                System.out.println("Block 63 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(6, 7) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block64
+        jb.get(63).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 63;
+                System.out.println("Block 64 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(7, 7) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block65
+        jb.get(64).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 64;
+                System.out.println("Block 65 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(0, 8) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block66
+        jb.get(65).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 65;
+                System.out.println("Block 66 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(1, 8) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block67
+        jb.get(66).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 66;
+                System.out.println("Block 67 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(2, 8) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block68
+        jb.get(67).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 67;
+                System.out.println("Block 68 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(3, 8) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block69
+        jb.get(68).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 68;
+                System.out.println("Block 69 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(4, 8) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block70
+        jb.get(69).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 69;
+                System.out.println("Block 70 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(5, 8) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block71
+        jb.get(70).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 70;
+                System.out.println("Block 71 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(6, 8) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+        // block72
+        jb.get(71).addActionListener(new ActionListener() {
+            
+            int count = 1;
+            public void actionPerformed(ActionEvent e) {
+                blk = 71;
+                System.out.println("Block 72 pressed");
+                if (FillCheck.contains(blk) == false) {
+                    if (callAllowPlaceBlock(7, 8) == true)
+                        callSelectBlock(blk);
+                } else {
+                    System.out.println("Tile already exists!");
+                    
+                    if(count==5)
+                        count = 1;
+                    System.out.println("Rotated " + (count*90) + " degrees.");
+                    callSelectBlockRotate(blk, count);
+                    count++;
+                }
+            }
+        });
+    }// end of callSelectBlockIndex()
+    
+    
+    //start of rotation method
+    public BufferedImage rotate90ToRight( BufferedImage img_last ){
+        int width = img_last.getWidth();
+        int height = img_last.getHeight();
+        BufferedImage returnImage = new BufferedImage( height, width , img_last.getType());
 
-		{
-		case 1:
-			ret = "/images/tile1.jpg";
-			break;
-		case 2:
-			ret = "/images/tile2.jpg";
-			break;
-		case 3:
-			ret = "/images/tile3.jpg";
-			break;
-		case 4:
-			ret = "/images/tile4.jpg";
-			break;
-		case 5:
-			ret = "/images/tile5.jpg";
-			break;
-		case 6:
-			ret = "/images/tile6.jpg";
-			break;
-		case 7:
-			ret = "/images/tile7.jpg";
-			break;
-		case 8:
-			ret = "/images/tile8.jpg";
-			break;
-		case 9:
-			ret = "/images/tile9.jpg";
-			break;
-		case 10:
-			ret = "/images/tile10.jpg";
-			break;
-		case 11:
-			ret = "/images/tile11.jpg";
-			break;
-		case 12:
-			ret = "/images/tile12.jpg";
-			break;
-		case 13:
-			ret = "/images/tile13.jpg";
-			break;
-		case 14:
-			ret = "/images/tile14.jpg";
-			break;
-		case 15:
-			ret = "/images/tile15.jpg";
-			break;
-		case 16:
-			ret = "/images/tile16.jpg";
-			break;
-		case 17:
-			ret = "/images/tile17.jpg";
-			break;
-		case 18:
-			ret = "/images/tile18.jpg";
-			break;
-		case 19:
-			ret = "/images/tile19.jpg";
-			break;
-		case 20:
-			ret = "/images/tile20.jpg";
-			break;
-		case 21:
-			ret = "/images/tile21.jpg";
-			break;
-		case 22:
-			ret = "/images/tile22.jpg";
-			break;
-		case 23:
-			ret = "/images/tile23.jpg";
-			break;
-		case 24:
-			ret = "/images/tile24.jpg";
-			break;
-		}
-		return ret;
-	} // end of getTile()
-	  public String getMeeple(int index) // return address of given tile index
-	  {
-	   String meep = "";
-	   switch (index)
-	   {
-	   case 1:
-	    meep = "/images/meeple1.jpg";
-	    break;
-	   case 2:
-	    meep = "/images/meeple2.jpg";
-	    break;
-	   case 3:
-	    meep = "/images/meeple3.jpg";
-	    break;
-	   case 4:
-	    meep = "/images/meeple4.jpg";
-	    break;
-	   case 5:
-	    meep = "/images/meeple5.jpg";
-	    break;
-	   }
-	   return meep;
-	 } // end of getmeeple()
-	public Board(){
-	      Random random = new Random();//randomize position of the labels
-	      JPanel _jp3 = new JPanel();
-	      Color[] colors = {Color.black, Color.blue, Color.green, Color.red, Color.yellow};
-		_jp3.setPreferredSize(new Dimension(_jp3_w, _jp3_h));
-	      _jp3.setLayout(null);
+        for( int x = 0; x < width; x++ ) {
+            for( int y = 0; y < height; y++ ) {
+                returnImage.setRGB( height - y -1, x, img_last.getRGB( x, y  )  );
+            }
+        }
+        return returnImage;
+    } //end of buffered image
+    
+    
+    
+    
+    public String getTile(int index) // return address of given tile index
+    {
+        String ret = "";
+        switch (index)
 
-	      MyMouseAdapter myMouseAdapter = new MyMouseAdapter();
+        {
+        case 1:
+            ret = "/images/tile1.jpg";
+            break;
+        case 2:
+            ret = "/images/tile2.jpg";
+            break;
+        case 3:
+            ret = "/images/tile3.jpg";
+            break;
+        case 4:
+            ret = "/images/tile4.jpg";
+            break;
+        case 5:
+            ret = "/images/tile5.jpg";
+            break;
+        case 6:
+            ret = "/images/tile6.jpg";
+            break;
+        case 7:
+            ret = "/images/tile7.jpg";
+            break;
+        case 8:
+            ret = "/images/tile8.jpg";
+            break;
+        case 9:
+            ret = "/images/tile9.jpg";
+            break;
+        case 10:
+            ret = "/images/tile10.jpg";
+            break;
+        case 11:
+            ret = "/images/tile11.jpg";
+            break;
+        case 12:
+            ret = "/images/tile12.jpg";
+            break;
+        case 13:
+            ret = "/images/tile13.jpg";
+            break;
+        case 14:
+            ret = "/images/tile14.jpg";
+            break;
+        case 15:
+            ret = "/images/tile15.jpg";
+            break;
+        case 16:
+            ret = "/images/tile16.jpg";
+            break;
+        case 17:
+            ret = "/images/tile17.jpg";
+            break;
+        case 18:
+            ret = "/images/tile18.jpg";
+            break;
+        case 19:
+            ret = "/images/tile19.jpg";
+            break;
+        case 20:
+            ret = "/images/tile20.jpg";
+            break;
+        case 21:
+            ret = "/images/tile21.jpg";
+            break;
+        case 22:
+            ret = "/images/tile22.jpg";
+            break;
+        case 23:
+            ret = "/images/tile23.jpg";
+            break;
+        case 24:
+            ret = "/images/tile24.jpg";
+            break;
+        }
+        return ret;
+    } // end of getTile()
+      public String getMeeple(int index) // return address of given tile index
+      {
+       String meep = "";
+       switch (index)
+       {
+       case 1:
+        meep = "/images/meeple1.jpg";
+        break;
+       case 2:
+        meep = "/images/meeple2.jpg";
+        break;
+       case 3:
+        meep = "/images/meeple3.jpg";
+        break;
+       case 4:
+        meep = "/images/meeple4.jpg";
+        break;
+       case 5:
+        meep = "/images/meeple5.jpg";
+        break;
+       }
+       return meep;
+     } // end of getmeeple()
+    public Board(){
+          Random random = new Random();//randomize position of the labels
+          JPanel _jp3 = new JPanel();
+        _jp3.setPreferredSize(new Dimension(_jp3_w, _jp3_h));
+          _jp3.setLayout(null);
 
-	      for (int i = 0; i < colors.length; i++) {
-	         Color c = colors[i];
-	         JLabel label = new JLabel("Meeple " + (i + 1));
-	         label.setSize(label.getPreferredSize());
-	         label.setBackground(c);
-	         label.setOpaque(true);
-	         int x = random.nextInt(_jp3_w);
-	         int y = random.nextInt(_jp3_h);
-	         label.setLocation(x, y);
-	         label.addMouseListener(myMouseAdapter);
-	         label.addMouseMotionListener(myMouseAdapter);
-	         _jp3.add(label);
-	      }	
-		JFrame _jf = new JFrame("Carcassone"); // window frame
-		JFrame _jf2 = new JFrame(""); // window2 frame
-	    JFrame _jf3 = new JFrame("Meeples");
-		JPanel _jp = new JPanel();
-		JPanel _jp2 = new JPanel(); // JPanel for window 2
-		_jp2.add(_jb2); // add jb2 button to jp2 jPanel 2
-		Dimension d3 = new Dimension();
-		d3.setSize(250, 400);
-		Dimension d2 = new Dimension(); // dimension on window 2
-		d2.setSize(250, 250); // 900, 800
-		Dimension d = new Dimension(); // dimension for window 1
-		d.setSize(770, 800); // 900, 800
-		_jf3.setSize(d3);
-		_jf2.setSize(d2); // set size of jframe
-		_jf.setSize(d); // window size
-		// JButton [] jb = new JButton[72];
-		for (int z = 0; z < 72; z++)
-		{
-			jb.add(new JButton());
-		}
-		// 8 Rows * 9 Columns = 72 buttons
-		for (int i = 0; i < 72; i = i + 1)
-			_jp.add(jb.get(i));
-		{
-		}
-		_jp.setLayout(new GridLayout(9, 8)); // 9 rows and 8 columns -> panel
-		// layout
-		_jp2.setLayout(new GridLayout(2, 1)); // layout of panel 2 in window 2
-		_jp2.add(exit_bt);
-		// end of tile to viewer
-		_jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		_jf.add(_jp); // add panel to frame
-		_jf.setLocationRelativeTo(null);
-		_jf.setVisible(true); // set window visible
-		// window 2
-		_jf2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		_jf2.add(_jp2); // add panel to frame
-		_jf2.setVisible(true); // set window visible
-		  //window 3
-	      _jf3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	      _jf3.add(_jp3);
-	      _jf3.setLocationByPlatform(true);
-	      _jf3.setVisible(true);
-		  _jf3.setLocation(1120, 00);
-	} // end of constructor Board()
-	public void setTile(int idx, int tile_no)
-	{
-		Image img;
-		try
-		{
-			img = ImageIO.read(getClass().getResource(""));
-			switch (tile_no)
-			{
-			case 1:
-				img = ImageIO.read(getClass().getResource("/images/tile1.jpg"));
-				break;
-			}
-			jb.get(idx + 1).setIcon(new ImageIcon(img));
-		}
-		catch (IOException ex) {
-		}
-	} // end of setTile()
-	public void drawTile(int idx, int tile_no) { // put tile_no to the block
-													// with idx
-		Image img;
-		System.out.println(idx);
-		try
-		{
-			img = ImageIO.read(getClass().getResource(""));
-			switch (tile_no)
-			{
-			case 1:
-				img = ImageIO.read(getClass().getResource("/images/tile1.jpg"));
-				break;
-			case 2:
-				img = ImageIO.read(getClass().getResource("/images/tile2.jpg"));
-				break;
-			case 3:
-				img = ImageIO.read(getClass().getResource("/images/tile3.jpg"));
-				break;
-			case 4:
-				img = ImageIO.read(getClass().getResource("/images/tile4.jpg"));
-				break;
-			case 5:
-				img = ImageIO.read(getClass().getResource("/images/tile5.jpg"));
-				break;
-			case 6:
-				img = ImageIO.read(getClass().getResource("/images/tile6.jpg"));
-				break;
-			case 7:
-				img = ImageIO.read(getClass().getResource("/images/tile7.jpg"));
-				break;
-			case 8:
-				img = ImageIO.read(getClass().getResource("/images/tile8.jpg"));
-				break;
-			case 9:
-				img = ImageIO.read(getClass().getResource("/images/tile9.jpg"));
-				break;
-			case 10:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile10.jpg"));
-				break;
-			case 11:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile11.jpg"));
-				break;
-			case 12:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile12.jpg"));
-				break;
-			case 13:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile13.jpg"));
-				break;
-			case 14:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile14.jpg"));
-				break;
-			case 15:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile15.jpg"));
-				break;
-			case 16:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile16.jpg"));
-				break;
-			case 17:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile17.jpg"));
-				break;
-			case 18:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile18.jpg"));
-				break;
-			case 19:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile19.jpg"));
-				break;
-			case 20:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile20.jpg"));
-				break;
-			case 21:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile21.jpg"));
-				break;
-			case 22:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile22.jpg"));
-				break;
-			case 23:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile23.jpg"));
-				break;
-			case 24:
-				img = ImageIO
-						.read(getClass().getResource("/images/tile24.jpg"));
-				break;
-			}
-			jb.get(idx).setIcon(new ImageIcon(img)); // put tile on random block
-			final int idd = idx; // set idx specified by user to idd which is
-									// final variable
-			// set icon once button pressed.
-			// breakpoint
-		}
-		catch (IOException ex) {
-		}
-	} // end of setTile()
-	// returns block index when given the coordinates
-	public int callBlockCoordinate(int x, int y)
-	{
-		int block_index = 0;
-		for (int i = 0; i < y; i++)
-		{
-			block_index = 8 * (i + 1);
-		}
-		block_index = block_index + x;
-		return (block_index);
-	} // end of callBlockCoordinates
-	class MyMouseAdapter extends MouseAdapter {
+          MyMouseAdapter myMouseAdapter = new MyMouseAdapter();
+          Color[] colors = {Color.black, Color.blue, Color.green, Color.red, Color.yellow};
+          for (int i = 0; i < colors.length; i++) {
+             Color c = colors[i];
+             JLabel label = new JLabel("Meeple " + (i + 1));
+             label.setSize(label.getPreferredSize());
+             label.setBackground(c);
+             label.setOpaque(true);
+             int x = random.nextInt(_jp3_w);
+             int y = random.nextInt(_jp3_h);
+             label.setLocation(x, y);
+             label.addMouseListener(myMouseAdapter);
+             label.addMouseMotionListener(myMouseAdapter);
+             _jp3.add(label);
+          }    
+        JFrame _jf = new JFrame("Carcassone"); // window frame
+        JFrame _jf2 = new JFrame(""); // window2 frame
+        JFrame _jf3 = new JFrame("Meeples");
+        JPanel _jp = new JPanel();
+        JPanel _jp2 = new JPanel(); // JPanel for window 2
+        _jp2.add(_jb2); // add jb2 button to jp2 jPanel 2
+        Dimension d3 = new Dimension();
+        d3.setSize(250, 400);
+        Dimension d2 = new Dimension(); // dimension on window 2
+        d2.setSize(250, 250); // 900, 800
+        Dimension d = new Dimension(); // dimension for window 1
+        d.setSize(770, 800); // 900, 800
+        _jf3.setSize(d3);
+        _jf2.setSize(d2); // set size of jframe
+        _jf.setSize(d); // window size
+        // JButton [] jb = new JButton[72];
+        for (int z = 0; z < 72; z++)
+        {
+            jb.add(new JButton());
+        }
+        // 8 Rows * 9 Columns = 72 buttons
+        for (int i = 0; i < 72; i = i + 1)
+            _jp.add(jb.get(i));
+        {
+        }
+        _jp.setLayout(new GridLayout(9, 8)); // 9 rows and 8 columns -> panel
+        // layout
+        _jp2.setLayout(new GridLayout(2, 1)); // layout of panel 2 in window 2
+        _jp2.add(exit_bt);
+        // end of tile to viewer
+        _jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        _jf.add(_jp); // add panel to frame
+        _jf.setLocationRelativeTo(null);
+        _jf.setVisible(true); // set window visible
+        // window 2
+        _jf2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        _jf2.add(_jp2); // add panel to frame
+        _jf2.setVisible(true); // set window visible
+          //window 3
+          _jf3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+          _jf3.add(_jp3);
+          _jf3.setLocationByPlatform(true);
+          _jf3.setVisible(true);
+          _jf3.setLocation(1120, 00);
+    } // end of constructor Board()
+    public void setTile(int idx, int tile_no)
+    {
+        Image img;
+        try
+        {
+            img = ImageIO.read(getClass().getResource(""));
+            switch (tile_no)
+            {
+            case 1:
+                img = ImageIO.read(getClass().getResource("/images/tile1.jpg"));
+                break;
+            }
+            jb.get(idx + 1).setIcon(new ImageIcon(img));
+        }
+        catch (IOException ex) {
+        }
+    } // end of setTile()
+    public void drawTile(int idx, int tile_no) { // put tile_no to the block
+                                                    // with idx
+        Image img;
+        System.out.println(idx);
+        try
+        {
+            img = ImageIO.read(getClass().getResource(""));
+            switch (tile_no)
+            {
+            case 1:
+                img = ImageIO.read(getClass().getResource("/images/tile1.jpg"));
+                break;
+            case 2:
+                img = ImageIO.read(getClass().getResource("/images/tile2.jpg"));
+                break;
+            case 3:
+                img = ImageIO.read(getClass().getResource("/images/tile3.jpg"));
+                break;
+            case 4:
+                img = ImageIO.read(getClass().getResource("/images/tile4.jpg"));
+                break;
+            case 5:
+                img = ImageIO.read(getClass().getResource("/images/tile5.jpg"));
+                break;
+            case 6:
+                img = ImageIO.read(getClass().getResource("/images/tile6.jpg"));
+                break;
+            case 7:
+                img = ImageIO.read(getClass().getResource("/images/tile7.jpg"));
+                break;
+            case 8:
+                img = ImageIO.read(getClass().getResource("/images/tile8.jpg"));
+                break;
+            case 9:
+                img = ImageIO.read(getClass().getResource("/images/tile9.jpg"));
+                break;
+            case 10:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile10.jpg"));
+                break;
+            case 11:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile11.jpg"));
+                break;
+            case 12:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile12.jpg"));
+                break;
+            case 13:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile13.jpg"));
+                break;
+            case 14:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile14.jpg"));
+                break;
+            case 15:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile15.jpg"));
+                break;
+            case 16:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile16.jpg"));
+                break;
+            case 17:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile17.jpg"));
+                break;
+            case 18:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile18.jpg"));
+                break;
+            case 19:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile19.jpg"));
+                break;
+            case 20:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile20.jpg"));
+                break;
+            case 21:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile21.jpg"));
+                break;
+            case 22:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile22.jpg"));
+                break;
+            case 23:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile23.jpg"));
+                break;
+            case 24:
+                img = ImageIO
+                        .read(getClass().getResource("/images/tile24.jpg"));
+                break;
+            }
+            jb.get(idx).setIcon(new ImageIcon(img)); // put tile on random block
+            final int idd = idx; // set idx specified by user to idd which is
+                                    // final variable
+            // set icon once button pressed.
+            // breakpoint
+        }
+        catch (IOException ex) {
+        }
+    } // end of setTile()
+    // returns block index when given the coordinates
+    public int callBlockCoordinate(int x, int y)
+    {
+        int block_index = 0;
+        for (int i = 0; i < y; i++)
+        {
+            block_index = 8 * (i + 1);
+        }
+        block_index = block_index + x;
+        return (block_index);
+    } // end of callBlockCoordinates
+    class MyMouseAdapter extends MouseAdapter {
 
-		   private Point initialLoc;
-		   private Point initialLocOnScreen;
+           private Point initialLoc;
+           private Point initialLocOnScreen;
 
-		   @Override
-		   public void mousePressed(MouseEvent e) {
-		      Component comp = (Component)e.getSource();
-		      initialLoc = comp.getLocation();
-		      initialLocOnScreen = e.getLocationOnScreen();
-		   }
+           @Override
+           public void mousePressed(MouseEvent e) {
+              Component comp = (Component)e.getSource();
+              initialLoc = comp.getLocation();
+              initialLocOnScreen = e.getLocationOnScreen();
+           }
 
-		   @Override
-		   public void mouseReleased(MouseEvent e) {
-		      Component comp = (Component)e.getSource();
-		      Point locOnScreen = e.getLocationOnScreen();
+           @Override
+           public void mouseReleased(MouseEvent e) {
+              Component comp = (Component)e.getSource();
+              Point locOnScreen = e.getLocationOnScreen();
 
-		      int x = locOnScreen.x - initialLocOnScreen.x + initialLoc.x;
-		      int y = locOnScreen.y - initialLocOnScreen.y + initialLoc.y;
-		      comp.setLocation(x, y);
-		   }
+              int x = locOnScreen.x - initialLocOnScreen.x + initialLoc.x;
+              int y = locOnScreen.y - initialLocOnScreen.y + initialLoc.y;
+              comp.setLocation(x, y);
+           }
 
-		   @Override
-		   public void mouseDragged(MouseEvent e) {
-		      Component comp = (Component)e.getSource();
-		      Point locOnScreen = e.getLocationOnScreen();
+           @Override
+           public void mouseDragged(MouseEvent e) {
+              Component comp = (Component)e.getSource();
+              Point locOnScreen = e.getLocationOnScreen();
 
-		      int x = locOnScreen.x - initialLocOnScreen.x + initialLoc.x;
-		      int y = locOnScreen.y - initialLocOnScreen.y + initialLoc.y;
-		      comp.setLocation(x, y);
-		   }
-		}
+              int x = locOnScreen.x - initialLocOnScreen.x + initialLoc.x;
+              int y = locOnScreen.y - initialLocOnScreen.y + initialLoc.y;
+              comp.setLocation(x, y);
+           }
+        }
 } // end of class
+
+
