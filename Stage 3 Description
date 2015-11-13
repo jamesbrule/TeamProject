@@ -1,0 +1,96 @@
+Enter file contents Specific stage 3 objectives
+
+
+The main concepts covered in this stage of the project are: 
+•reading code written by others, and critiquing it
+•extending code you have not written
+•augmenting the functionality of an existing system
+
+Stage 3 requirements
+
+
+As has been mentioned in recitation already, you will build your stage 3 on one of the candidate stage 2 codebases that are in the repository. You may choose any one, provided it is not your team's stage 2 code. If your team's stage 2 code is in the mix you have a choice of four codebases rather than 5. No guarantee is made that any of the codebases has complete functionaltiy or a good design.
+
+You may alter existing code only to fix bugs or to accommodate new functionality. You can not simply rip out the existing code and paste in your team's stage 2 code. Keep in mind the scenario: you are working for a company. Throwing away existing code for no good reason (not having written it is not a good reason) will be seen as wasting time and resources. 
+
+All stage 1 and stage 2 requirements, plus the user stories given below. As with earlier stages your team may wish to decompose these user stories into smaller ones.
+•Your stage 3 implementation must follow these updated rules.
+
+Note that there are two expansion packs discussed in the rules: (1) the river tiles and (2) the abbot. You must account for the river tile exapansion, but IGNORE the Abbot expansion. This image file shows the tile set expanded with the river tiles.
+•Ensure that followers are placed legally.
+
+In other words, a follower cannot be placed on a region that is already occupied.
+•Implement scoring as spelled out in the rules. The score of each player must be visible in the UI.
+
+•Produce an executable JAR file.
+
+Your TA will instruct you on how to do this in recitation, probably a little closer to the submission date.
+•Implement save/restore functionality for the game.
+
+At the start of a player's turn (and ONLY at then) they should have the option of saving the game.
+
+Saving the game writes the current state of the game to a plain text file with extension "csn" (the required format is given below), and then exits the game.
+
+Starting the game with a single command-line argument, the filename of a saved state, causes the game to start back in exactly same state as it was saved in, at the start of that player's turn. When restored, the game must guarantee to shuffle the unplayed tiles at least once, before the first tile after restore is drawn.
+
+The save file format MUST BE: 
+line #1: A comma-separated list of all the player records [name, color, score], in their order of play, with first name listed being the one who saved this game, and whose turn it is upon restore. 
+line #2: A comma-separated list of all the tiles that have been placed on the board, with their (X,Y) coordinates, and follower placements, if any. Follower placements are present in the save file only for those tiles that actually have followers on them. The follower placement is noted by the name of the player who placed the follower and the region in which the follower was placed (indicated by an edge position that the region connects to). 
+line #3: A comma-separated list of all the tiles have have not yet been placed on the board.  
+
+The (X,Y) coordinate of a tile is computed as follows. The leftmost tile on the board is in column 0. The uppermost tile on the board is in row 0. The coordinates of other tiles are computed relative to these tiles' coordinates. This means that as a the board expands the coordinates of tiles will change. 
+Hint: Depending on how you've written your code, it may make sense to compute the coordinates of tiles "on-demand" when saving the state of the game. 
+
+The follower placement is always expressed in terms of which of the 12 'connectors', or the monastery, it is placed on. The connectors are numbered from 0 to 11, clockwise around as follows: 
++--0--+--1--+--2--+
+|                 |
+11                3
+|                 |
++                 +
+|                 |
+10      12        4
+|                 |
++                 +
+|                 |
+9                 5
+|                 |
++--8--+--7--+--6--+
+
+The monastery, if present on the tile, is numbered 12 (since it is never connected to the edge of a tile). These designations are always relative to the unrotated tile (i.e. a tile in configuration 0). A tile in configuration 1 maps the connector designations as follows: +--9--+--10-+--11-+
+|                 |
+8                 0
+|                 |
++                 +
+|                 |
+7       12        1
+|                 |
++                 +
+|                 |
+6                 2
+|                 |
++--5--+--4--+--3--+
+
+
+
+SaveFile.csn is a possible save file before the first player (Amy) has played their turn. The order of tiles on line 3 (the unplayed tiles) has no relevance as the tiles must be shuffled when a game is restored. This prevents a sneaky player from cheating by predicting the draw order of tiles by looking at the save file.
+
+SaveFile2.csn shows the state of the game after Amy played her turn, placing tile RD in rotation 1, to the South of the start file (RA). Amy placed a follower on the monastery. Amy finished her turn and Bob, at the start of his turn, saved the game. 
+
+This image file shows the tile set expanded with the river tiles. It also labels each tile with a letter and a digit (as in "K0"). The river tiles have two-letter designations, followed by a digit. The letter designation identifies the type of tile. The digit identifies the rotation, as indicated at the bottom of the tile set diagram. 
+
+If you have questions about these requirements or the rules, ask in Piazza. 
+
+Team Submission
+
+
+Only ONE member of your team is permitted to make a submission on behalf of your team: the Stage 1 submission must be made by the team member whose username comes first alphabetically in the team. 
+
+We strongly suggest that all team members be present when the submission takes place. All team members MUST be listed as partners when the submission is made to Web-CAT. 
+
+We strongly suggest that one or more test submissions be made in the days leading up to the deadline, so that you resolve any submission issues before the due date. 
+
+The project submission must contain your project's source code, properly javadoc'ed (do NOT include .class files), together with .project and .classpath files. This encompasses JUnit test code and implementation code. 
+
+Due date: on or before 9:00 PM on Friday, December 4, 2015. 
+
+You must schedule a demo, to take place during the week of 12/7 to 12/11, with a grading TA. Details of how to sign up for a demo slot (which your entire team must attend) will be given separately. 
